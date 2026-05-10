@@ -1,62 +1,34 @@
-# 🔥 Ghost Protocol v9.1 — DeepRecon
+# 👻 Ghost Protocol v10.0 — Bug Bounty Deep Recon Engine
 
-**Advanced Automated Reconnaissance Engine for Bug Bounty Hunters & Penetration Testers**
+**Ghost Protocol** is an advanced, highly modular, and OPSEC-safe Deep Reconnaissance Engine written in Python. Designed specifically for Bug Bounty Hunters and Offensive Security Professionals (OSCP/OSEP), it replaces fragile bash scripts with a robust, object-oriented pipeline.
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Version](https://img.shields.io/badge/Version-8.1-red)
+It automates the entire reconnaissance lifecycle—from passive subdomain enumeration and permutation bruteforcing to active port probing, historical data mining, JS secret hunting, and cloud asset discovery.
 
-A powerful, fast, and feature-rich reconnaissance tool that performs deep passive + active recon on multiple targets with smart filtering, vulnerability hunting, and automated reporting.
+## 🔥 Key Features
 
-### Why DeepRecon?
-- DNS wildcard & dead subdomain filtering (dnsx)
-- Non-standard port scanning (naabu)
-- Historical endpoints discovery (gau + waybackurls)
-- JS secret hunting + subdomain takeover checks
-- 403 bypass attempts
-- Advanced GF pattern matching (8 patterns)
-- Nuclei + Katana crawling (depth 3)
-- Discord webhook notifications for critical findings
-- Resume capability (crash hone par bhi continue)
-- Clean structured output with summary report
+* **🧠 Smart Resume Capability:** Drops `.phase_done` markers at every step. If your internet drops or the script crashes, it resumes exactly where it left off. Never start from zero again.
+* **🧹 Graceful Cleanup:** Handles `Ctrl+C` (SIGINT) cleanly, wiping out session-unique temporary files from `/tmp` without leaving garbage behind.
+* **🛡️ OPSEC & Shell-Safe:** Uses Python sets for deduplication (goodbye `sort -u` encoding bugs) and `shlex.quote()` to completely prevent command injection from malicious target inputs.
+* **🎯 Strict Scope Validation:** Supports a `scope.txt` file allowing wildcards (`*.example.com`) and explicit exclusions (`!out-of-scope.example.com`).
+* **📊 HTML Summary Reports:** Automatically generates a clean `report.html` and a detailed `summary.json` upon completion for easy reporting.
+* **🚨 Discord Alerts:** Built-in webhook support to ping you instantly when critical findings (like non-standard ports, exposed secrets, or Nuclei vulns) are discovered.
 
----
+## 🛠️ Prerequisites
 
-## ✨ Features
+Ghost Protocol orchestrates the best community-driven Go tools. Ensure the following are installed and available in your `$PATH`:
 
-- **Multi-target support** with parallel scanning (safe for 16GB RAM)
-- **Smart Subdomain Enumeration** (crt.sh + subfinder + assetfinder + amass)
-- **DNS Resolution** with wildcard filtering using dnsx
-- **Port Scanning** on 16+ common non-standard ports using naabu
-- **Live Probing** with httpx (status, title, web server, CDN detection)
-- **Historical URL Mining** using gau & waybackurls
-- **Deep Crawling** with katana (depth = 3)
-- **Vulnerability Scanning** with nuclei (critical + high severity)
-- **JS Secret Extraction** using subjs
-- **Subdomain Takeover** detection with subzy
-- **CORS Misconfiguration** & **403 Bypass** module
-- **GF Pattern Matching** (XSS, SSRF, SQLi, Open Redirect, LFI, RCE, IDOR, Debug Logic)
-- **Screenshot Capture** using gowitness
-- **Discord Alerts** for critical vulns & takeovers
-- **Resume Support** + Detailed logging
+**Required Tools:**
+`subfinder`, `assetfinder`, `httpx`, `nuclei`, `katana`, `gf`, `dnsx`, `naabu`, `gau`
 
----
+**Optional (Highly Recommended) Tools:**
+`amass`, `waybackurls`, `subjs`, `corsy`, `subzy`, `puredns`, `shuffledns`, `alterx`, `ffuf`, `massdns`, `gowitness`, `paramspider`, `wappalyzergo`, `cloud_enum`
 
-## 🛠 Installation
+## 🚀 Installation
 
 ```bash
-git clone https://github.com/yourusername/DeepRecon.git
-cd DeepRecon
-pip install -r requirements.txt
+git clone [https://github.com/yourusername/ghost-protocol.git](https://github.com/yourusername/ghost-protocol.git)
+cd ghost-protocol
+chmod +x DeepRec.py
 
-
-
-Note: Script mostly uses external Go tools (subfinder, httpx, nuclei, etc.). Make sure they are installed and available in your $PATH.
-
-Required Tools:
-
-subfinder, assetfinder, amass, httpx, nuclei, katana, gowitness, gf, dnsx, naabu, gau
-
-Optional Tools:
-
-waybackurls, subjs, corsy, subzy
+# Ensure Python requirements are met (requests, colorama)
+pip3 install requests urllib3 colorama
